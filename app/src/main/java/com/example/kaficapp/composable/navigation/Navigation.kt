@@ -1,6 +1,7 @@
 package com.example.kaficapp.composable.navigation
 
 import android.util.Log
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
@@ -17,6 +18,7 @@ import com.example.kaficapp.view_models.AuthenticationViewModel
 import com.example.kaficapp.view_models.CartViewModel
 import com.example.kaficapp.view_models.DrinksViewModel
 
+@ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @Composable
 fun setUpNavigation(

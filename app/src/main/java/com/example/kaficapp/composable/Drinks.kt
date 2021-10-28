@@ -1,20 +1,16 @@
 package com.example.kaficapp.composable
 
 import android.util.Log
+import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.*
 import androidx.compose.material.Card
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,7 +24,10 @@ import com.example.kaficapp.R
 import com.example.kaficapp.data.RespondHandler
 import com.example.kaficapp.view_models.CartViewModel
 import com.example.kaficapp.view_models.DrinksViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
+@ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @Composable
 fun DrinksScreen(drinksViewModel: DrinksViewModel, navHostController: NavHostController){
@@ -50,24 +49,39 @@ fun DrinksScreen(drinksViewModel: DrinksViewModel, navHostController: NavHostCon
         .fillMaxSize()
         .background(Color.Yellow)) {
         LazyVerticalGrid(state=drinksViewModel.lazylistState,cells = GridCells.Fixed(2) ,modifier = Modifier.fillMaxSize()){
-            items(typeDrinks.data?: emptyList()){
+            itemsIndexed(typeDrinks.data?: emptyList()){index,it->
 
 
                 Box(modifier= Modifier
                     .background(Color.Red)
                     .height(200.dp)
-                    .padding(10.dp).clickable { navHostController.navigate("Drinks Detail Screen/${it.id}") }
+                    .padding(10.dp)
+                    .clickable { navHostController.navigate("Drinks Detail Screen/${it.id}") }
                     ,contentAlignment = Alignment.Center){
-                    Card(modifier = Modifier
-                        .fillMaxSize()
-                        .align(Alignment.Center),backgroundColor = colorResource(id = R.color.BCG)) {
-                        // Image(painter = painterResource(id = R.drawable.coffie), contentDescription = "",contentScale = ContentScale.FillHeight)
-                        Box(modifier = Modifier.fillMaxSize(),contentAlignment = Alignment.Center) {
-                            Text(it.name,color = Color.White,fontSize = 20.sp,textAlign = TextAlign.Center)
-                        }
+
+
+
+                        Card(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .align(Alignment.Center),
+                            backgroundColor = colorResource(id = R.color.BCG)
+                        ) {
+                            // Image(painter = painterResource(id = R.drawable.coffie), contentDescription = "",contentScale = ContentScale.FillHeight)
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    it.name,
+                                    color = Color.White,
+                                    fontSize = 20.sp,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+
 
                     }
-
                 }
             }
 
@@ -75,10 +89,12 @@ fun DrinksScreen(drinksViewModel: DrinksViewModel, navHostController: NavHostCon
     }
 }
 
+@ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @Composable
 fun DrinkType(drinksViewModel: DrinksViewModel,type:Int,cartViewModel: CartViewModel){
     val drinks by drinksViewModel.listDrinksType.collectAsState()
+val scope=rememberCoroutineScope()
 
     LaunchedEffect(key1 = true){
         if(type!=-1)
@@ -86,12 +102,26 @@ fun DrinkType(drinksViewModel: DrinksViewModel,type:Int,cartViewModel: CartViewM
     }
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(Color.Blue)) {
+        ) {
         LazyVerticalGrid(cells=GridCells.Fixed(2),modifier = Modifier.fillMaxSize()) {
             items(drinks.data?: emptyList()){
+                var state by remember{
+                    mutableStateOf(false)}
 
-                ItemList(id = it.id, name = it.name, onClick = {  cartViewModel.addItem(it) } ,it.price)
 
+                scope.launch {
+                    delay(300)
+                    state=true
+                }
+
+                AnimatedVisibility(visible = state,enter = slideInVertically(animationSpec = tween(600)),exit = slideOutVertically(animationSpec = tween(600))) {
+
+                    ItemList(
+                        id = it.id,
+                        name = it.name,
+                        onClick = { cartViewModel.addItem(it) },
+                        it.price)
+                }
 
             }
         }
