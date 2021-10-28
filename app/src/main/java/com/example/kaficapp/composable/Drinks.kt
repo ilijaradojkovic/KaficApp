@@ -47,13 +47,13 @@ fun DrinksScreen(drinksViewModel: DrinksViewModel, navHostController: NavHostCon
     }
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(Color.Yellow)) {
+       ) {
         LazyVerticalGrid(state=drinksViewModel.lazylistState,cells = GridCells.Fixed(2) ,modifier = Modifier.fillMaxSize()){
             itemsIndexed(typeDrinks.data?: emptyList()){index,it->
 
 
                 Box(modifier= Modifier
-                    .background(Color.Red)
+
                     .height(200.dp)
                     .padding(10.dp)
                     .clickable { navHostController.navigate("Drinks Detail Screen/${it.id}") }

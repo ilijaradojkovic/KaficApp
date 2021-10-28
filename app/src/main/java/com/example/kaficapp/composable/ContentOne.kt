@@ -1,5 +1,6 @@
 package com.example.kaficapp
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -24,6 +25,7 @@ import com.example.kaficapp.data.Selection
 import com.example.kaficapp.view_models.CartViewModel
 import com.example.kaficapp.view_models.DrinksViewModel
 
+@ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @Composable
 fun SetScreenOne(

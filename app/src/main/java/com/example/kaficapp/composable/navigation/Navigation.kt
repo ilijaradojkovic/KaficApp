@@ -71,7 +71,7 @@ fun setUpNavigation(
     }))){
 
         val id= it.arguments?.getInt("id")?:-1
-        Log.i("cao",it.toString())
+
         DrinkType(drinksViewModel = drinksViewModel, type =id ,cartViewModel)
 
     }
@@ -81,7 +81,7 @@ fun setUpNavigation(
         }))){
 
             val id= it.arguments?.getInt("id")?:-1
-            Log.i("cao",it.toString())
+
             CakeDetail(cakeViewModel = cakeViewModel, type =id,cartViewModel )
 
         }

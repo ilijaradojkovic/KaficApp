@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.navigation.compose.rememberNavController
 import com.example.kaficapp.composable.CakeViewModel
@@ -24,6 +25,7 @@ class MainActivity : ComponentActivity() {
     private val drinksViewModel:DrinksViewModel by viewModels()
     private val cartViewModel:CartViewModel by viewModels()
 
+    @ExperimentalAnimationApi
     @ExperimentalFoundationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

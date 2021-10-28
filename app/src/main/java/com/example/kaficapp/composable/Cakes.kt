@@ -38,12 +38,12 @@ fun Cakes_Screen(cakeViewModel: CakeViewModel,navHostController: NavHostControll
 
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(Color.Red)) {
+        ) {
 
         LazyVerticalGrid(state=cakeViewModel.lazylistState,cells = GridCells.Fixed(2) ,modifier = Modifier.fillMaxSize()){
             items(cakesType.data?: emptyList()){
                 Box(modifier= Modifier
-                    .background(Color.Red)
+
                     .height(200.dp)
                     .padding(10.dp)
                     .clickable { navHostController.navigate("Cakes Detail Screen/${it.id}") },contentAlignment = Alignment.Center){

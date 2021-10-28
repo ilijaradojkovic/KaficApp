@@ -22,6 +22,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import com.airbnb.lottie.compose.*
 import com.example.kaficapp.data.RespondHandler
 import com.example.kaficapp.view_models.AuthenticationViewModel
 
@@ -45,10 +46,9 @@ fun LoginPage(authViewModel: AuthenticationViewModel, context: Context, navigate
     Box(modifier= Modifier
         .fillMaxSize()
     ) {
-        Image(painter = painterResource(id = R.drawable.caffebbcg),
-            contentDescription ="Bcg",modifier = Modifier
-                .fillMaxSize()
-                .background(Color.White),contentScale = ContentScale.FillHeight )
+
+        Image(painter = painterResource(id = R.drawable.caffebbcg), contentDescription = "Bcg",contentScale = ContentScale.FillHeight,modifier = Modifier.fillMaxSize())
+
 
         Column(modifier = Modifier
             .fillMaxSize()
@@ -56,7 +56,14 @@ fun LoginPage(authViewModel: AuthenticationViewModel, context: Context, navigate
             Box(modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth(),contentAlignment = Alignment.Center){
-                Image(painter = painterResource(id = R.drawable.logo), contentDescription ="Logoimg" ,Modifier.size(100.dp))
+                val lotti =
+                    rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.coffieanim))
+                val progress by animateLottieCompositionAsState(
+                    composition = lotti.value,
+                    isPlaying = true,
+                    iterations = LottieConstants.IterateForever
+                )
+                LottieAnimation(composition = lotti.value, progress = progress,modifier = Modifier.size(150.dp))
             }
 
             Box(modifier = Modifier
